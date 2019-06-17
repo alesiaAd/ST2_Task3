@@ -30,11 +30,11 @@ static const CGFloat cItemsSpacing = 20;
         self.imageFromUrlView.translatesAutoresizingMaskIntoConstraints = NO;
         
         [NSLayoutConstraint activateConstraints:@[
-                                                  [self.imageFromUrlView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:cItemsSpacing],
-                                                  [self.imageFromUrlView.heightAnchor constraintEqualToConstant:cImageHeight],
-                                                  [self.imageFromUrlView.widthAnchor constraintEqualToConstant:cImageWidth],
-                                                  [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-                                                  ]
+            [self.imageFromUrlView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:cItemsSpacing],
+            [self.imageFromUrlView.heightAnchor constraintEqualToConstant:cImageHeight],
+            [self.imageFromUrlView.widthAnchor constraintEqualToConstant:cImageWidth],
+            [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+            ]
          ];
         
         self.urlLabel = [UILabel new];
@@ -43,11 +43,11 @@ static const CGFloat cItemsSpacing = 20;
         self.urlLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         [NSLayoutConstraint activateConstraints:@[
-                                                  [self.urlLabel.leadingAnchor constraintEqualToAnchor:self.imageFromUrlView.trailingAnchor constant:cItemsSpacing],
-                                                  [self.urlLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-cItemsSpacing],
-                                                  [self.urlLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:cItemsSpacing],
-                                                  [self.urlLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-cItemsSpacing]
-                                                  ]
+            [self.urlLabel.leadingAnchor constraintEqualToAnchor:self.imageFromUrlView.trailingAnchor constant:cItemsSpacing],
+            [self.urlLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-cItemsSpacing],
+            [self.urlLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:cItemsSpacing],
+            [self.urlLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-cItemsSpacing]
+            ]
          ];
     }
     return self;

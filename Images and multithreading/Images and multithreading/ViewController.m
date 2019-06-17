@@ -131,6 +131,8 @@
     viewController.model = self.models[indexPath.row];
     [self.navigationController pushViewController:viewController animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]
+                     atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
 
 @end
