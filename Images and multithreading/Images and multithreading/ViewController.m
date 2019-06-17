@@ -39,6 +39,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.estimatedRowHeight = 140;
     
     [self.tableView registerClass:[ViewControllerTableViewCell class] forCellReuseIdentifier:@"ViewControllerTableViewCell"];
     
@@ -121,7 +122,7 @@
 
 - (void)reloadCell:(NSIndexPath *)indexPath {
     NSArray* rowsToReload = @[indexPath];
-    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Delegate
