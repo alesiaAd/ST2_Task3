@@ -34,7 +34,7 @@
         [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
         [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
-                                              ]
+        ]
      ];
     
     self.tableView.delegate = self;
@@ -120,7 +120,7 @@
 }
 
 - (void)reloadCell:(NSIndexPath *)indexPath {
-    NSArray* rowsToReload = [NSArray arrayWithObjects:indexPath, nil];
+    NSArray* rowsToReload = @[indexPath];
     [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 }
 

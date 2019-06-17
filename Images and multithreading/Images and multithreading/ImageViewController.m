@@ -28,21 +28,20 @@ static const CGFloat cItemsSpacing = 20;
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(changeImage:) name:@"ImageLoadedNotification" object:nil];
-    
-    self.imageView = [UIImageView new];
-    [self.view addSubview:self.imageView];
     [self setUpImageView];
-    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.image = self.model.image;
 }
 
 - (void)changeImage:(NSNotification *) notification {
     dispatch_async(dispatch_get_main_queue(), ^(void){
-        [self setUpImageView];
+        self.imageView.image = self.model.image;
     });
 }
 
 - (void)setUpImageView {
-    self.imageView.image = self.model.image;
+    self.imageView = [UIImageView new];
+    [self.view addSubview:self.imageView];
+    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
         [self.imageView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:cItemsSpacing],
