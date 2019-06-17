@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-enum statuses {
-    notLoaded,
-    loading,
-    loaded,
-    error
+typedef NS_ENUM(NSInteger, LoadingProgressStatus) {
+    LoadingProgressStatusNotLoaded,
+    LoadingProgressStatusLoading,
+    LoadingProgressStatusLoaded,
+    LoadingProgressStatusError
 };
 
 @interface DataModel : NSObject
 
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSString *urlString;
-@property (assign, nonatomic) enum statuses status;
+@property (assign, nonatomic) LoadingProgressStatus status;
 
 @end

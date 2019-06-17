@@ -50,12 +50,12 @@
 
 - (NSArray *)makeModelsArray:(NSArray *)contentArray {
     NSMutableArray *models = [NSMutableArray new];
-    UIImage *imageDefault = [UIImage imageNamed:@"noPicture"];
+    UIImage *defaultImage = [UIImage imageNamed:@"noPicture"];
     for (NSString *url in contentArray) {
         DataModel *model = [DataModel new];
         model.urlString = url;
-        model.status = notLoaded;
-        model.image = imageDefault;
+        model.status = LoadingProgressStatusNotLoaded;
+        model.image = defaultImage;
         [models addObject:model];
     }
     return [models copy];
@@ -78,9 +78,9 @@
         cell.urlLabel.text = model.urlString;
 
         switch (model.status) {
-            case notLoaded: {
+            case LoadingProgressStatusNotLoaded: {
                 cell.imageFromUrlView.image = model.image;
-                model.status = loading;
+                model.status = LoadingProgressStatusLoading;
                 [self reloadCell:indexPath];
                 dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                     NSURL *url = [NSURL URLWithString:model.urlString];
@@ -88,10 +88,13 @@
                     UIImage *image = [UIImage imageWithData:data];
                     if (image) {
                         model.image = image;
-                        model.status = loaded;
+                        model.status = LoadingProgressStatusLoaded;
+                        [[NSNotificationCenter defaultCenter] postNotificationName:
+                         @"ImageLoadedNotification" object:nil];
+
                     }
                     else {
-                        model.status = error;
+                        model.status = LoadingProgressStatusError;
                     }
                     dispatch_async(dispatch_get_main_queue(), ^(void){
                         [self reloadCell:indexPath];
@@ -99,18 +102,17 @@
                 });
                 break;
             }
-            case loading:
+            case LoadingProgressStatusLoading: {
                 model.image = [UIImage imageNamed:@"loading"];
                 break;
-            case loaded: {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:model.image forKey:@"loadedImage"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:
-                 @"ImageLoadedNotification" object:nil userInfo:userInfo];
+            }
+            case LoadingProgressStatusLoaded: {
                 break;
             }
-            case error:
+            case LoadingProgressStatusError: {
                 model.image = [UIImage imageNamed:@"error"];
                 break;
+            }
         }
         cell.imageFromUrlView.image = model.image;
     }
@@ -118,8 +120,7 @@
 }
 
 - (void)reloadCell:(NSIndexPath *)indexPath {
-    NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-    NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+    NSArray* rowsToReload = [NSArray arrayWithObjects:indexPath, nil];
     [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -129,6 +130,7 @@
     ImageViewController *viewController = [ImageViewController new];
     viewController.model = self.models[indexPath.row];
     [self.navigationController pushViewController:viewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
