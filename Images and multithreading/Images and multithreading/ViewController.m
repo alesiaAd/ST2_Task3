@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ViewControllerTableViewCell.h"
 #import "DataModel.h"
+#import "ImageViewController.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -21,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"Images";
     
     self.tableView = [UITableView new];
     [self.view addSubview:self.tableView];
@@ -54,6 +57,7 @@
         [self.models addObject:model];
     }
 }
+
 
 #pragma mark - DataSource
 
@@ -114,6 +118,14 @@
     NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
     [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ImageViewController *viewController = [ImageViewController new];
+    viewController.model = self.models[indexPath.row];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

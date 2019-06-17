@@ -30,10 +30,12 @@
         
         [NSLayoutConstraint activateConstraints:@[
             [self.imageFromUrlView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20],
-            [self.imageFromUrlView.heightAnchor constraintEqualToConstant:50],
-            [self.imageFromUrlView.widthAnchor constraintEqualToConstant:100],
-            [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
-                                                  ]
+            [self.imageFromUrlView.heightAnchor constraintEqualToConstant:100],
+            [self.imageFromUrlView.widthAnchor constraintEqualToConstant:200],
+            [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+//            [self.imageFromUrlView.topAnchor constraintEqualToAnchor:self.topAnchor constant:20],
+//            [self.imageFromUrlView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20]
+            ]
          ];
         
         self.urlLabel = [UILabel new];
@@ -44,9 +46,11 @@
         [NSLayoutConstraint activateConstraints:@[
             [self.urlLabel.leadingAnchor constraintEqualToAnchor:self.imageFromUrlView.trailingAnchor constant:20],
             [self.urlLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
-            [self.urlLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
-                                                  ]
-         ];
+            //[self.urlLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+            [self.urlLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:20],
+            [self.urlLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20]
+            ]
+        ];
     }
     return self;
 }

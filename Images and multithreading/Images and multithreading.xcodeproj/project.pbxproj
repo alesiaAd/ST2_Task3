@@ -18,6 +18,7 @@
 		F886616C22B7612D005ED26A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F886616B22B7612D005ED26A /* DataModel.m */; };
 		F886617022B76614005ED26A /* Url List.plist in Resources */ = {isa = PBXBuildFile; fileRef = F886616F22B76614005ED26A /* Url List.plist */; };
 		F886617322B7686E005ED26A /* ViewControllerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */; };
+		F886617622B797FD005ED26A /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F886617522B797FD005ED26A /* ImageViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		F886616F22B76614005ED26A /* Url List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Url List.plist"; sourceTree = "<group>"; };
 		F886617122B7686E005ED26A /* ViewControllerTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerTableViewCell.h; sourceTree = "<group>"; };
 		F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTableViewCell.m; sourceTree = "<group>"; };
+		F886617422B797FD005ED26A /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		F886617522B797FD005ED26A /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				F886613922B3F15D005ED26A /* AppDelegate.m */,
 				F886613B22B3F15D005ED26A /* ViewController.h */,
 				F886613C22B3F15D005ED26A /* ViewController.m */,
+				F886617422B797FD005ED26A /* ImageViewController.h */,
+				F886617522B797FD005ED26A /* ImageViewController.m */,
 				F886617122B7686E005ED26A /* ViewControllerTableViewCell.h */,
 				F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */,
 				F886616A22B7612D005ED26A /* DataModel.h */,
@@ -276,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F886617622B797FD005ED26A /* ImageViewController.m in Sources */,
 				F886613D22B3F15D005ED26A /* ViewController.m in Sources */,
 				F886616C22B7612D005ED26A /* DataModel.m in Sources */,
 				F886614822B3F160005ED26A /* main.m in Sources */,
