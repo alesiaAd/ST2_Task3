@@ -15,6 +15,9 @@
 		F886614822B3F160005ED26A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F886614722B3F160005ED26A /* main.m */; };
 		F886615222B3F160005ED26A /* Images_and_multithreadingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F886615122B3F160005ED26A /* Images_and_multithreadingTests.m */; };
 		F886615D22B3F160005ED26A /* Images_and_multithreadingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F886615C22B3F160005ED26A /* Images_and_multithreadingUITests.m */; };
+		F886616C22B7612D005ED26A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F886616B22B7612D005ED26A /* DataModel.m */; };
+		F886617022B76614005ED26A /* Url List.plist in Resources */ = {isa = PBXBuildFile; fileRef = F886616F22B76614005ED26A /* Url List.plist */; };
+		F886617322B7686E005ED26A /* ViewControllerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,11 @@
 		F886615822B3F160005ED26A /* Images and multithreadingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Images and multithreadingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F886615C22B3F160005ED26A /* Images_and_multithreadingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Images_and_multithreadingUITests.m; sourceTree = "<group>"; };
 		F886615E22B3F160005ED26A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F886616A22B7612D005ED26A /* DataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		F886616B22B7612D005ED26A /* DataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
+		F886616F22B76614005ED26A /* Url List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Url List.plist"; sourceTree = "<group>"; };
+		F886617122B7686E005ED26A /* ViewControllerTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerTableViewCell.h; sourceTree = "<group>"; };
+		F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,11 @@
 				F886613922B3F15D005ED26A /* AppDelegate.m */,
 				F886613B22B3F15D005ED26A /* ViewController.h */,
 				F886613C22B3F15D005ED26A /* ViewController.m */,
+				F886617122B7686E005ED26A /* ViewControllerTableViewCell.h */,
+				F886617222B7686E005ED26A /* ViewControllerTableViewCell.m */,
+				F886616A22B7612D005ED26A /* DataModel.h */,
+				F886616B22B7612D005ED26A /* DataModel.m */,
+				F886616F22B76614005ED26A /* Url List.plist */,
 				F886613E22B3F15D005ED26A /* Main.storyboard */,
 				F886614122B3F160005ED26A /* Assets.xcassets */,
 				F886614322B3F160005ED26A /* LaunchScreen.storyboard */,
@@ -238,6 +251,7 @@
 				F886614522B3F160005ED26A /* LaunchScreen.storyboard in Resources */,
 				F886614222B3F160005ED26A /* Assets.xcassets in Resources */,
 				F886614022B3F15D005ED26A /* Main.storyboard in Resources */,
+				F886617022B76614005ED26A /* Url List.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,8 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F886613D22B3F15D005ED26A /* ViewController.m in Sources */,
+				F886616C22B7612D005ED26A /* DataModel.m in Sources */,
 				F886614822B3F160005ED26A /* main.m in Sources */,
 				F886613A22B3F15D005ED26A /* AppDelegate.m in Sources */,
+				F886617322B7686E005ED26A /* ViewControllerTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
