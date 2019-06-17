@@ -44,10 +44,13 @@
     
     self.models = [NSMutableArray new];
     
+    UIImage *imageDefault = [UIImage imageNamed:@"noPicture"];
+    
     for (NSString *url in contentArray) {
         DataModel *model = [DataModel new];
         model.urlString = url;
         model.status = notLoaded;
+        model.image = imageDefault;
         [self.models addObject:model];
     }
 }
@@ -69,8 +72,48 @@
     
     DataModel *model = (DataModel *) self.models[indexPath.row];
     cell.urlLabel.text = model.urlString;
+    cell.imageFromUrlView.image = model.image;
     
+    switch (model.status) {
+        case notLoaded: {
+            model.status = loading;
+            [self reloadCell:indexPath];
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                NSURL *url = [NSURL URLWithString:model.urlString];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *image = [UIImage imageWithData:data];
+                if (image) {
+                    model.image = image;
+                    model.status = loaded;
+                }
+                else {
+                    model.status = error;
+                }
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self reloadCell:indexPath];
+                });
+            });
+            break;
+        }
+        case loading:
+            model.image = [UIImage imageNamed:@"loading"];
+            break;
+        case loaded:
+            break;
+        case error:
+            model.image = [UIImage imageNamed:@"error"];
+            model.status = notLoaded;
+            [self reloadCell:indexPath];
+            break;
+    }
+    cell.imageFromUrlView.image = model.image;
     return cell;
+}
+
+- (void)reloadCell:(NSIndexPath *)indexPath {
+    NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end
