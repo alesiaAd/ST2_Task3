@@ -14,7 +14,7 @@
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *models;
+@property (strong, nonatomic) NSArray *models;
 
 @end
 
@@ -45,25 +45,24 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Url List" ofType:@"plist"];
     NSArray *contentArray = [NSArray arrayWithContentsOfFile:filePath];
     
-    self.models = [NSMutableArray new];
-    
+    self.models = [self makeModelsArray:contentArray];
+}
+
+- (NSArray *)makeModelsArray:(NSArray *)contentArray {
+    NSMutableArray *models = [NSMutableArray new];
     UIImage *imageDefault = [UIImage imageNamed:@"noPicture"];
-    
     for (NSString *url in contentArray) {
         DataModel *model = [DataModel new];
         model.urlString = url;
         model.status = notLoaded;
         model.image = imageDefault;
-        [self.models addObject:model];
+        [models addObject:model];
     }
+    return [models copy];
 }
 
 
 #pragma mark - DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.models.count;
@@ -74,45 +73,47 @@
     
     ViewControllerTableViewCell *cell = (ViewControllerTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    DataModel *model = (DataModel *) self.models[indexPath.row];
-    cell.urlLabel.text = model.urlString;
-    cell.imageFromUrlView.image = model.image;
-    
-    switch (model.status) {
-        case notLoaded: {
-            model.status = loading;
-            [self reloadCell:indexPath];
-            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                NSURL *url = [NSURL URLWithString:model.urlString];
-                NSData *data = [NSData dataWithContentsOfURL:url];
-                UIImage *image = [UIImage imageWithData:data];
-                if (image) {
-                    model.image = image;
-                    model.status = loaded;
-                }
-                else {
-                    model.status = error;
-                }
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [self reloadCell:indexPath];
+    if ([self.models[indexPath.row] isKindOfClass:[DataModel class]]) {
+        DataModel *model = self.models[indexPath.row];
+        cell.urlLabel.text = model.urlString;
+
+        switch (model.status) {
+            case notLoaded: {
+                cell.imageFromUrlView.image = model.image;
+                model.status = loading;
+                [self reloadCell:indexPath];
+                dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                    NSURL *url = [NSURL URLWithString:model.urlString];
+                    NSData *data = [NSData dataWithContentsOfURL:url];
+                    UIImage *image = [UIImage imageWithData:data];
+                    if (image) {
+                        model.image = image;
+                        model.status = loaded;
+                    }
+                    else {
+                        model.status = error;
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        [self reloadCell:indexPath];
+                    });
                 });
-            });
-            break;
+                break;
+            }
+            case loading:
+                model.image = [UIImage imageNamed:@"loading"];
+                break;
+            case loaded: {
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:model.image forKey:@"loadedImage"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:
+                 @"ImageLoadedNotification" object:nil userInfo:userInfo];
+                break;
+            }
+            case error:
+                model.image = [UIImage imageNamed:@"error"];
+                break;
         }
-        case loading:
-            model.image = [UIImage imageNamed:@"loading"];
-            break;
-        case loaded: {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:model.image forKey:@"loadedImage"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:
-             @"ImageLoadedNotification" object:nil userInfo:userInfo];
-            break;
-        }
-        case error:
-            model.image = [UIImage imageNamed:@"error"];
-            break;
+        cell.imageFromUrlView.image = model.image;
     }
-    cell.imageFromUrlView.image = model.image;
     return cell;
 }
 

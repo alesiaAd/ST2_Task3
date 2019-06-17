@@ -8,6 +8,8 @@
 
 #import "ImageViewController.h"
 
+static const CGFloat cItemsSpacing = 20;
+
 @interface ImageViewController ()
 
 @property (strong, nonatomic) UIImageView *imageView;
@@ -19,6 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"Details";
+    self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc]
+                                                                         initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(changeImage:) name:@"ImageLoadedNotification" object:nil];
     
@@ -27,7 +33,7 @@
 
 - (void)changeImage:(NSNotification *) notification {
     self.model.image = [notification.userInfo valueForKey:@"loadedImage"];
-    self.imageView = nil;
+    [self.imageView removeFromSuperview];
     [self loadImageView];
 }
 
@@ -38,10 +44,10 @@
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.imageView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:20],
-                                              [self.imageView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
-                                              [self.imageView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-20],
-                                              [self.imageView.bottomAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-20]
+                                              [self.imageView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:cItemsSpacing],
+                                              [self.imageView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:cItemsSpacing],
+                                              [self.imageView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-cItemsSpacing],
+                                              [self.imageView.bottomAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-cItemsSpacing]
                                               ]
      ];
 }
