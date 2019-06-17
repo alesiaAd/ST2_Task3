@@ -10,6 +10,8 @@
 
 @interface ImageViewController ()
 
+@property (strong, nonatomic) UIImageView *imageView;
+
 @end
 
 @implementation ImageViewController
@@ -17,17 +19,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *imageView = [UIImageView new];
-    imageView.image = self.model.image;
-    [self.view addSubview:imageView];
-    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(changeImage:) name:@"ImageLoadedNotification" object:nil];
+    
+    [self loadImageView];
+}
+
+- (void)changeImage:(NSNotification *) notification {
+    self.model.image = [notification.userInfo valueForKey:@"loadedImage"];
+    self.imageView = nil;
+    [self loadImageView];
+}
+
+- (void)loadImageView {
+    self.imageView = [UIImageView new];
+    self.imageView.image = self.model.image;
+    [self.view addSubview:self.imageView];
+    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-        [imageView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:20],
-        [imageView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
-        [imageView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-20],
-        [imageView.bottomAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-20]
-        ]
+                                              [self.imageView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:20],
+                                              [self.imageView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
+                                              [self.imageView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-20],
+                                              [self.imageView.bottomAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-20]
+                                              ]
      ];
 }
 

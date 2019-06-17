@@ -8,6 +8,10 @@
 
 #import "ViewControllerTableViewCell.h"
 
+static const CGFloat cImageHeight = 100;
+static const CGFloat cImageWidth = 200;
+static const CGFloat cItemsSpacing = 20;
+
 @implementation ViewControllerTableViewCell
 
 - (void)awakeFromNib {
@@ -17,7 +21,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -29,13 +33,11 @@
         self.imageFromUrlView.translatesAutoresizingMaskIntoConstraints = NO;
         
         [NSLayoutConstraint activateConstraints:@[
-            [self.imageFromUrlView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20],
-            [self.imageFromUrlView.heightAnchor constraintEqualToConstant:100],
-            [self.imageFromUrlView.widthAnchor constraintEqualToConstant:200],
-            [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-//            [self.imageFromUrlView.topAnchor constraintEqualToAnchor:self.topAnchor constant:20],
-//            [self.imageFromUrlView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20]
-            ]
+                                                  [self.imageFromUrlView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:cItemsSpacing],
+                                                  [self.imageFromUrlView.heightAnchor constraintEqualToConstant:cImageHeight],
+                                                  [self.imageFromUrlView.widthAnchor constraintEqualToConstant:cImageWidth],
+                                                  [self.imageFromUrlView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+                                                  ]
          ];
         
         self.urlLabel = [UILabel new];
@@ -44,15 +46,23 @@
         self.urlLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         [NSLayoutConstraint activateConstraints:@[
-            [self.urlLabel.leadingAnchor constraintEqualToAnchor:self.imageFromUrlView.trailingAnchor constant:20],
-            [self.urlLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
-            //[self.urlLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-            [self.urlLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:20],
-            [self.urlLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20]
-            ]
-        ];
+                                                  [self.urlLabel.leadingAnchor constraintEqualToAnchor:self.imageFromUrlView.trailingAnchor constant:cItemsSpacing],
+                                                  [self.urlLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-cItemsSpacing],
+                                                  [self.urlLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:cItemsSpacing],
+                                                  [self.urlLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-cItemsSpacing]
+                                                  ]
+         ];
     }
     return self;
+}
+
+-(CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize withHorizontalFittingPriority:(UILayoutPriority)horizontalFittingPriority verticalFittingPriority:(UILayoutPriority)verticalFittingPriority {
+    CGSize size = [super systemLayoutSizeFittingSize:targetSize withHorizontalFittingPriority:horizontalFittingPriority verticalFittingPriority:verticalFittingPriority];
+    CGFloat minCellHeight = cImageHeight + 2 * cItemsSpacing;
+    if (size.height < minCellHeight) {
+        size = CGSizeMake(size.width, minCellHeight);
+    }
+    return size;
 }
 
 @end

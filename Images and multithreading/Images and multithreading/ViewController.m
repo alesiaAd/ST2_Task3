@@ -102,12 +102,14 @@
         case loading:
             model.image = [UIImage imageNamed:@"loading"];
             break;
-        case loaded:
+        case loaded: {
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:model.image forKey:@"loadedImage"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:
+             @"ImageLoadedNotification" object:nil userInfo:userInfo];
             break;
+        }
         case error:
             model.image = [UIImage imageNamed:@"error"];
-            model.status = notLoaded;
-            [self reloadCell:indexPath];
             break;
     }
     cell.imageFromUrlView.image = model.image;
